@@ -1,0 +1,1231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="/比賽檔案/fontawesome/css/all.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        #menu_control{
+            position: absolute;
+            z-index: -2;
+            opacity: 0;
+        }
+        .header{
+            height: 80px;
+            background-color: #000;
+            position: relative;
+        }
+        .logo{
+            width: auto;
+            margin-left: 50px;
+        }
+        .logo img{
+            display: block;
+            width: 150px;
+            height: 70px;
+        }
+        .menu_btn{
+            width: 40px;
+            height: 40px;
+            background-color: #000;
+            display: block;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+        }
+        .menu_btn span{
+            opacity: 0;
+            height: 1px;
+            width: 1px;
+            display: block;
+            overflow: hidden;
+        }
+        .menu_btn::before{
+            content: '';
+            position: absolute;
+            height: 2px;
+            left: 2px;
+            width: 36px;
+            background-color: #fff;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            box-shadow: 0 8px 0 #fff ,
+                        0 -8px 0 #fff;
+        }
+        .container nav{
+            width: 80%;
+            height: 500px;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 50px;
+            left: -100%;
+        }
+        .container nav a{
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 600;
+            padding: 10px 10px;
+            border-bottom: 1px solid #fff;
+            background-color: rgba(255, 255, 255, 0);
+            transition: .5s;
+        }
+        nav a:hover{
+          background-color: rgba(255, 255, 255, 1);
+          color: #000;
+          border-radius: 100px;
+        }
+        #menu_control:checked ~ .header nav{
+            left: 0;
+            z-index: 2;
+        }
+        .banner{
+          background-color: rgb(198, 238, 248);
+          width: 100%;
+          position: relative;
+        }
+        .banner video{
+          width: 100%;
+          margin-bottom: 0;
+          z-index: 1;
+        }
+        .banner-title{
+          position: absolute;
+          top: 20px;
+          left: 30px;
+          font-size: 20px;
+          font-weight: 900;
+          text-align: center;
+          border-bottom: #000 2px solid;
+        }
+        .banner-txt{
+          bottom: 10px;
+          right: 10px;
+          position: absolute;
+        }
+        .banner-txt p{
+          font-weight: 700;
+        }
+        .new{
+          width:50%;
+          height:500px; /*視窗高度*/
+          background-color:#ccc;
+          border: solid #000 1px;
+          box-shadow: 10px 5px 5px hsla(240, 40%, 15%, .6);
+          position: absolute;
+          top: 600px;
+          left: 0;
+          z-index: 1;
+        }
+        .new-text{
+          width: 600px;
+          height:100%;
+          padding: 5px;
+          display:flex;
+          flex-direction:column;
+        }
+        .new-text h4{
+          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 10px 0;
+          font-size: 30px;
+          font-weight: 900;
+        }
+        .new-text p{
+          display: block;
+          margin: 10px;
+          padding: 0 10px;
+          align-items: flex-start;
+          color: brown;
+          font-weight: 600;
+        }
+        .more{
+          width: 100px;
+          height: 50px;
+          position: absolute;
+          bottom: 120px;
+          left: 100px;
+          background-color: rgba(255, 255, 255, .5);
+          border: #000 solid 1px;
+          box-shadow: 10px 5px 5px hsla(240, 40%, 15%, .6);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: 600;
+        }
+        .more:hover{
+          background-color: #fff;
+        }
+        .container{
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+        }
+        .side-menu{
+          width: 170px;
+          height: 350px;
+          background-image: linear-gradient(0,#3381b0,#c2196c);
+          display: flex;
+          flex-direction: column;
+          box-shadow: 5px 0 10px hsla(240, 40%, 15%, .6);
+          position: fixed;
+          right: 0;
+          z-index: 2;
+          transform: translateX(100%);
+          transition: .8s;
+          border-radius: 10px 0 0 10px;
+        }
+        .side-menu nav{
+          height: auto;
+          margin: 25px 0;
+          display: block;
+          top: -10px;
+          transform: translateX(120%);
+          background-color: transparent;
+        }
+        .side-menu nav a{
+          border-bottom: solid 1px #fff;
+          font-weight: 700;
+          text-decoration: none;
+          display: block;
+          color: #fff;
+          margin: 0 20px;
+          padding: 15px;
+        }
+        .side-menu a .fab{
+          margin-right: -1.1em;
+          transform: scale(0);
+          transition: .3s;
+        }
+        .side-menu .a1{  /*連絡電話&電子信箱*/
+          padding: 15px 15px 15px 13px;
+          margin: 0 20px;
+        }
+        .side-menu .a2{  /*Youtube*/
+          padding: 15px 15px 15px 12px;
+          margin: 0 20px;
+        }
+        .side-menu .a3{  /*Line*/
+          padding: 15px 15px 15px 17px;
+          margin: 0 20px;
+        }
+        .side-menu a .fas {
+          margin-right: -1.1em;
+          transform: scale(0);
+          transition: .3s;
+        }
+        .side-menu a:hover .fab{
+          margin-right: .5em;
+          transform: scale(1);
+        }
+        .side-menu a:hover .fas{
+          margin-right: .5em;
+          transform: scale(1);
+        }
+        .side-menu nav a:hover{
+          color: #fff;
+          background-color: transparent;
+          border-radius: 0;
+        }
+        .side-menu label{
+          position: absolute;
+          width: 40px;
+          height: 80px;
+          background-color: #000;
+          color: #fff;
+          left: -40px;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          line-height: 80px;
+          text-align: center;
+          font-size: 30px;
+          border-radius: 10px 0 0 10px;
+        }
+        #side-menu-switch{
+          position: fixed;
+          opacity: 0;
+        }
+        #side-menu-switch:checked + .side-menu{
+          transform: translateX(0);
+        }
+        #side-menu-switch:checked + .side-menu label .fas{
+          transform: scale(-1);
+        }
+        .header-search{
+          display: flex;
+        }
+        .header-search input{
+          width: 200px;
+          height: 23px;
+          margin: 10px  0 0 10px;
+          border-radius: 200px 0 0 200px;
+        }
+        .header-search input:focus,
+        .header-search button:focus{
+          outline: none;
+        }
+        .header-search button{
+          width: auto;
+          height: 20px;
+          margin-top: 11.5px;
+          background-color: #fff;
+          border: none;
+          border-radius: 0 200px 200px 0;
+        }
+        .header-search i{
+          width: 20px;
+          height: 20px;
+          margin-top: 2px;
+          border-radius: 50%;
+        }
+        .container-2{
+          width: 100%;
+          display: flex;
+          margin: 0;
+          padding: 30px 0 0;
+          justify-content: center;
+          align-items: center;
+          background-color: rgb(198, 238, 248);
+        }
+        .container-1{
+          width: 100%;
+        }
+        .wrapbgcolor {
+          width: 100%;
+          background-color: #7bf;
+          position: relative;
+        }
+        .wrapbgcolor img{
+          width: 100%;
+          height: 768px;
+          position: relative;
+        }
+        .wrabg-text{
+          position: absolute;
+          bottom: 300px;
+          right: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width:100%;
+          height:50vh; /*視窗高度*/
+          background-color:#ccc;
+          background: linear-gradient(115deg, transparent 50%,#7bf 50%) ;
+          position: relative;
+        }
+        .wrabg-pic1 img{
+          width: 250px;
+          height: 350px;
+          position: absolute;
+          left: 115px;
+          bottom: 10px;
+          margin: 0 0 40px;
+        }
+        .wrabg-text1{
+          width: 500px;
+          height: 400px;
+          position: absolute;
+          right: 50px;
+          bottom: 180px;
+          background-color: transparent;
+        }
+        .wrabg-text1 h2{
+          font-size: 40px;
+          font-weight: 700;
+          margin: 20px 0 0 ;
+          text-align: center;
+        }
+        .wrabg-text1 p{
+          line-height: 30px;
+          font-weight: 550;
+          margin: 10px 0 0 ;
+        }
+        .wrabg-bg1{
+          width: 250px;
+          height: 350px;
+          background-color: rgb(104, 70, 70);
+          position: relative;
+          left: 100px;
+          top: -10px;
+          box-shadow: 30px 20px 5px rgba(160, 0, 0, .5);
+        }
+        .wrabg-text2{
+          width: 500px;
+          height: 400px;
+          position: absolute;
+          left: 50px;
+          bottom: -120px;
+          background-color: transparent;
+          z-index: 1;
+        }
+        .wrabg-text2 h2{
+          font-size: 40px;
+          font-weight: 700;
+          margin: 20px 0 0 ;
+          text-align: center;
+        }
+        .wrabg-text2 p{
+          line-height: 30px;
+          font-weight: 550;
+          margin: 20px 0 0 ;
+        }
+        .wrabg-bg{
+          width: 250px;
+          height: 350px;
+          background-color: rgb(238, 209, 209);
+          position: relative;
+          left: 65px;
+          top: -10px;
+          box-shadow: 30px 20px 5px rgba(160, 0, 0, .5);
+        }
+        .wrabg-pic img{
+          width: 500px;
+          height: 200px;
+        }
+        .wrabg-pic2 img{
+          width: 250px;
+          height: 350px;
+          position: absolute;
+          left: 80px;
+          bottom: 10px;
+          margin: 0 0 40px;
+        }
+        .item-group{
+          width: auto;
+          max-width: 800px;
+          z-index: 1;
+          margin:30px 0 0 450px;
+        }
+        .wrap{
+          display: flex;
+          padding: 20px 0;
+          width: 100%;
+          position: absolute;
+          bottom: 650px;
+          right: 0;
+        }
+        .item{
+          width: 250px;
+          height: 300px;
+          border: #fff solid 1px;
+          margin: 10px;
+          transform: translateY(0px);
+          transition: .5s;
+          box-shadow: 0 10px 30px rgba(160, 0, 0, .5);
+          background-color: rgb(198, 238, 248);
+        }
+        .item:hover{
+          transform: translateY(-5%);
+        }
+        .item .pic img{
+          width: 100%;
+          height: 164.73px;
+        }
+        /*.item:hover .pic img{
+          width: 150%;
+          height: 200px;
+          transition: 10s;
+        }*/
+        .item .text{
+          font-size: 20px;
+          text-align: center;   
+          position: relative;      
+        }
+        .item .text::before{
+          content: '';
+          width: 0;
+          height: 0;
+          left: 1px;
+          right:0;
+          top: 0;
+          position: absolute;
+          border-top: 50px solid transparent;
+          border-left: 122px solid rgb(198, 228, 248);
+          border-right: 122px solid rgb(198, 238, 248);
+          transform: translateY(-104%);
+        }
+        .text h2{
+          font-size: 30px;
+          font-weight: 900;
+          border-bottom:#000 solid 1px ;
+        }
+        .text p{
+          margin: 20px 0 10px;
+          line-height: 25px;
+          font-size: 20px;
+          font-weight: 600;
+        }
+        .txt p{
+          line-height: 25px;
+          margin: 10px 0 0;
+        }
+        .text a{
+          text-decoration: none;
+          font-size: 10px;
+          padding: 10px;
+          margin: 0;
+          line-height: 0;
+          background-color: rgb(198, 238, 248);
+          border: solid 1px #000;
+          border-radius: 200px;
+          align-self: flex-end;
+          float: right;
+          margin-right: 3px;
+          margin-top: -7px;
+        }
+        .txt a{
+          margin-top: -11.5px;
+          margin-right: 3px;
+        }
+        .text a:hover{
+          color: rgb(238, 12, 12);
+          background-color: rgb(255, 255, 255);
+        }
+        .nav-link{
+          text-decoration: none;
+          color: #fff;
+          margin: 0;
+          padding: 10px;
+          border-radius: 100px;
+        }
+        .nav-link:hover{
+          color: #000;
+        }
+        .article{
+          background-color: rgb(198, 238, 248);
+        }
+        .article img{
+          width: 100%;
+          height: 768px;
+          position: relative;
+        }
+        .article-pic{
+          display: flex;
+          justify-content: center;
+          background-color: transparent;
+        }
+        .article-pic img{
+          width: 1100px;
+          border-radius: 2%;
+          margin: 50px 0 0;
+          box-shadow: 15px 10px 10px rgba(160, 0, 0, .5);
+        }
+        .article .title-txt{
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          width:100%;
+          height:50vh; /*視窗高度*/
+          background-color:#ccc;
+          background: linear-gradient(115deg, #7bf 50% , transparent 50%) ;
+          position: relative;
+        }
+        .article1{
+          width: 90%;
+          margin: auto;
+          border: solid 0px #000;
+          background-color: transparent;
+          border-radius: 2%;
+          position: relative;
+          z-index: 1;
+        }
+        .title-txt h4{
+          text-align: center;
+          font-size: 80px;
+          font-weight: 900;
+          margin: 100px 120px 0 0;
+          padding: 10px;
+          z-index: 0;
+          border: solid #000 2px;
+          border-radius: 5%;
+          box-shadow: 10px 5px 5px hsla(240, 40%, 15%, .6);
+        }
+        .article-guided{
+          width: 100%;
+          top: 0;
+          right: 0;
+          position: absolute;
+          border-radius: 2%;
+          display: flex;
+          justify-content: center;
+          opacity: 0;
+        }
+        .article-guided nav{
+          text-align: left;
+          width: 900px;
+          height: 460px;
+          font-weight: 600;
+          padding: 0px 5px 0;
+          line-height: 30px;
+          display: flex;
+        }
+        .article-guided a{
+          color: black;
+          text-decoration: none;
+          border-radius: 200px;
+        }
+        .article-guided .map1{
+          position: absolute;
+          bottom: 140px;
+          right: 300px;
+          background-color: #fff;
+          padding: 0 5px;
+          border-radius: 200px;
+          border: black solid 1px;
+        }
+        .article-guided .map2{
+          position: absolute;
+          bottom: 170px;
+          left: 200px;
+          background-color: #fff;
+          padding: 0 5px;
+          border-radius: 200px;
+          border: black solid 1px;
+        }
+        .article-guided .map3{
+          position: absolute;
+          bottom: 115px;
+          right: 480px;
+          background-color: #fff;
+          padding: 0 5px;
+          border-radius: 200px;
+          border: black solid 1px;
+        }
+        .article-guided .map4{
+          position: absolute;
+          bottom: 100px;
+          right: 600px;
+          background-color: #fff;
+          padding: 0 5px;
+          border-radius: 200px;
+          border: black solid 1px;
+        }
+        .article-guided .map5{
+          position: absolute;
+          bottom: 330px;
+          right: 300px;
+          background-color: #fff;
+          padding: 0 5px;
+          border-radius: 200px;
+          border: black solid 1px;
+        }
+        .article-guided .map6{
+          position: absolute;
+          bottom: 0px;
+          right: 370px;
+          background-color: #fff;
+          padding: 0 5px;
+          border-radius: 200px;
+          border: black solid 1px;
+        }
+        .article-guided .map7{
+          position: absolute;
+          bottom: 200px;
+          right: 470px;
+          background-color: #fff;
+          padding: 0 5px;
+          border-radius: 200px;
+          border: black solid 1px;
+        }
+        .article-guided .map8{
+          position: absolute;
+          bottom: 0px;
+          right: 570px;
+          background-color: #fff;
+          padding: 0 5px;
+          border-radius: 200px;
+          border: black solid 1px;
+        }
+        .article-guided .map9{
+          position: absolute;
+          bottom: 280px;
+          right: 660px;
+          background-color: #fff;
+          padding: 0 5px;
+          border-radius: 200px;
+          border: black solid 1px;
+        }
+        .article-guided .map10{
+          position: absolute;
+          bottom: 250px;
+          right: 170px;
+          background-color: #fff;
+          padding: 0 5px;
+          border-radius: 200px;
+          border: black solid 1px;
+        }
+        .carousel-item img{
+          width: 800px;
+          height: 200px;
+        }
+        .carousel-caption{
+          font-size: 40px;
+          text-align: center;
+        }
+        .flooter{
+          width: 100%;
+          height: 300px;
+          background-color: #000;
+          color: #fff;
+          position: relative;
+        }
+        .flooter .footer{
+          width: 0;
+          display: flex;
+          z-index: 0;
+          opacity: 0;
+        }
+        .footer-item{
+          width: 100%;
+          flex-grow: 1;
+          margin: 0 20px;
+          z-index: 1;
+        }
+        .footer-item h4{
+          font-size: 24px;
+          color: #fff;
+          border-bottom: 1px dotted #fff;
+          padding-bottom: .5em;
+        }
+        .footer-item nav{
+          display: flex;
+          flex-direction: column;
+        }
+        .footer-item nav a{
+          color: #fff;
+          line-height: 1.4;
+          text-decoration: none;
+          padding: 5px 0;
+        }
+        .footer-item nav a:hover{
+          color: #000;
+          font-weight: 700;
+          background-color: #fff;
+        }
+        .footer-pic1 img{
+          max-width: 100px;
+          right: 0;
+          bottom: 0px;
+          position: absolute;
+
+        }
+        .footer-pic2 img{
+          max-width: 100px;
+          left: 0;
+          bottom: 0px;
+          position: absolute;
+        }
+        .footer-sub{
+          display: flex;
+        }
+        .footer-subs form{
+          display: flex;
+          width: 100%;
+          margin: auto;
+        }
+        .footer-subs input[type="text"],
+        .footer-subs input[type="submit"]{
+          border:none;
+          padding: 5px 10px;
+          margin: 30px 0;
+        }
+        .footer-subs input[type="text"]{
+          width: 0;
+          flex-grow: 1;
+        }
+        .footer-subs input[type="submit"]{
+          color: #70f6df;
+          background-color: #3e5293;
+        }
+        .copyright{
+          width: 100%;
+          text-align: center;
+          padding: 50px 0 0 0;
+        }
+        .back-to-top {
+          width: 3rem;
+          height: 3rem;
+          padding: 0;
+          margin: 0;
+          border: .5px solid #fff;
+          border-radius: 33%;
+          opacity: 0.6;
+          background: #000;
+          cursor: pointer;
+          position:fixed;
+          right: 1rem;
+          bottom: 1rem;
+          display: flex;
+          z-index: 1;
+        }
+        .back-to-top::before, .back-to-top::after {
+          content: " ";
+          width: 25px;
+          height: 6px;
+          top: 23px;
+          border-radius: 3px;
+          background: #f90;
+          position: absolute;
+        }
+        .back-to-top::before {
+          transform: rotate(-45deg) translate(0, -50%);
+          left: 0.42rem;
+        }
+        .back-to-top::after {
+          transform: rotate(45deg) translate(0, -50%);
+          right: 0.42rem;
+        }
+        .back-to-top:focus {
+          outline: none;
+        }
+        
+
+        @media screen and (min-width:768px) {
+            .menu_btn{
+                display: none;
+            }
+            .header{
+                display: flex;
+                justify-content: space-between;
+                background-color: #000;
+                align-items: center;
+            }
+            .container nav{
+                position: relative;
+                left: 0px;
+                display: flex;
+                width: auto;
+                height: auto;
+                top: 0;
+                border-color: transparent;
+            }
+            .container nav a{
+                padding: 10px 10px;
+                margin: 0 5px;
+                border-bottom: none;
+            }
+            .header-search{
+              display: flex;
+            }
+            .header-search input{
+              width: 110px;
+              margin: 6px  0 0 10px;
+            }
+            .header-search button{
+              height: 20px;
+              margin: auto;
+              background-color: #fff;
+              border: none;
+            }
+            .side-menu nav{
+              top: 0;
+            }
+            .side-menu nav{
+              transform: translateX(0);
+            }
+            .nav-link{
+              padding: 10px 20px;
+            }
+            .banner-title{
+              left: 50px;
+              left: 50px;
+              font-size: 50px;
+            }
+            .banner img{
+              width: 100%;
+              height: 400px;
+            }
+            .d-block {            /*底下輪播圖寬高*/
+              width: 800px;
+              height: 400px;
+            }
+            .item-group{
+              display: flex;
+              width: 100%;
+            }
+            .text{
+              margin: auto;
+            }
+            .container-1{            /*底下輪播圖寬高*/
+              width: 800px;
+
+            }
+            .item .text::before{
+              border-left: 121.345px solid rgb(198, 238, 248);
+              border-right: 121.345px solid rgb(198, 238, 248);
+            }
+            .article-guided{
+              opacity: 1;
+            }
+            .article1{
+              width: 1150px;
+            }
+            .carousel-item img{
+              width: 800px;
+              height: 200px;
+            }
+            .carousel-caption h5{
+              font-size: 40px;
+              width: 200px;
+              margin: auto;
+              transform:all 0.5s 0.5s;
+            }
+            .carousel-caption:hover h5{
+              font-size: 45px;
+            }
+            .flooter{
+              background-color: #000;
+              color: #fff;
+              text-align: center;
+              font-size: 10px;
+              padding: 20px;
+            }
+            .flooter .footer{
+              width: 800px;
+              display: flex;
+              margin: 40px  0 0 165px;
+              z-index: 0;
+              opacity: 1;
+            }
+            .footer-pic1 img{
+              max-width: 190px;
+            }
+            .footer-pic2 img{
+              max-width: 190px;
+            }
+            .copyright{
+              width: 100%;
+              text-align: center;
+              font-size: 20px;
+              margin: 40px 0;
+            }
+        }
+
+    </style>
+    <title>甫東網頁設計</title>
+  </head>
+  <body >
+
+
+    <input type="checkbox" name="" id="menu_control">
+    <div class="header">
+      <div class="logo-1">
+        <h1 class="logo">
+            <a href="甫東網頁設計.html">
+                <img srcset="奇美logo1.png">
+            </a>
+        </h1>
+      </div>
+
+      <label for="menu_control" class="menu_btn">
+          <span>選單</span>
+      </label>
+
+      <div class="container">
+          <nav>
+                <a href="最新消息.html">   最新消息  </a>
+                <a href="購票資訊.html">   購票資訊  </a>
+                <a href="關於我們.html">   關於我們  </a>
+                <a class="nav-link" href="#isaac-block" data-bs-toggle="modal">會員登入</a>
+                <a href="#">   language    </a>
+                <form class="header-search">
+                  <input type="search" name="" id="">
+                  <button><i class="fas fa-search"></i></button>
+                </form>
+          </nav>
+
+      </div>
+  </div>
+
+
+    <input type="checkbox" name="" id="side-menu-switch">
+
+        <div class="side-menu" id="side-id">
+          <nav>
+            <a href="" class="a1 phone"><i class="fas fa-phone-square-alt"></i>連絡電話</a>
+            <a href="" class="a1 email"><i class="fas fa-envelope"></i>電子信箱</a>
+            <a href="https://www.youtube.com/channel/UCS1_h6BWlAbRLP0MnRi4LzQ" class="a2 video"><i class="fab fa-youtube"></i>Youtube</a>
+            <a href="" class="a3 Line"><i class="fab fa-line"></i>Line</a>
+            <a href="https://www.facebook.com/CHIMEI.tw/"><i class="fab fa-facebook-square"></i>FB</a>
+            <a href="https://www.instagram.com/chimeimuseum/?hl=zh-tw"><i class="fab fa-instagram-square"></i>IG</a>
+          </nav> 
+          <label for="side-menu-switch">
+            <i class="fas fa-angle-left"></i>
+          </label>
+        </div>
+
+        
+      <div class="banner">
+        <div class="banner-title">
+          <h1>CHIMEI<br>MUSEUM</h1>
+        </div>
+        <video src="奇美1-1.mp4"  muted="true" autoplay="true" loop="true"></video>
+        <div class="banner-txt">
+          <p>影片取自於 Youtube : Chimei Museum</p>
+        </div>
+      </div>
+      
+
+      <div class="new">
+        <div class="new-text">
+          <h4>奇美消息</h4>
+          <p>2021.07.12  微解封</p>
+          <p>2021.07.10  奇美博物館7/13開館 本周日開放網路預約</p>
+          <p>2021.07.09  奇美博物館7/13重新開館，短期將採網路預約參觀</p>
+          <p>2021.07.08  奇美博物館7/13重新開館</p>
+          <p>2021.07.01  [取消公告]7/13(五) WONDERFUL THINGS 開幕VIP之夜，取...</p>
+          <p>2021.06.23  配合政府防，本館延長休館至7/12</p>
+        </div>
+          <button class="more">
+            了解更多
+          </button>
+      </div>
+      
+
+      <div class="wrapbgcolor">
+        <img srcset="奇美背景1.jpg">
+          <div class="wrap">
+            <div class="item-group">
+                <div class="item">
+                  <div class="pic">
+                    <img srcset="奇美開館.jpg ">
+                  </div>
+                  <div class="text">
+                    <h2>開放時間</h2>
+                    <p>每周三休館<br>開放時間 : 9:30-17:30</p>
+                  </div>
+                </div>
+              
+                <div class="item">
+                  <div class="pic">
+                    <img srcset="奇美防疫.jpg ">
+                  </div>
+                  <div class="text">
+                    <h2>最新消息</h2>
+                    <p>>>配合政府防疫<br>本館休館延長至7/12</p>
+                      <a href="#" class="a">m o r e</a>
+                  </div>
+                </div>
+              
+                <div class="item">
+                  <div class="pic">
+                    <img srcset="奇美實境.jpg ">
+                  </div>
+                  <div class="text txt">
+                    <h2>推薦行程</h2>
+                    <p>--->實境遊戲<br>--->親子共遊<br>--->名人帶路</p>
+                      <a href="#" class="a1">m o r e</a>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+
+          <div class="wrabg-text"></div>
+            <div class="wrabg-text1">
+              <div class="wrabg-bg1"></div>
+              <div class="wrabg-pic1">
+                  <img srcset="沉思者.jpg ">
+                  <h2>【沉思者】</h2>
+                  <p>是位於羅丹【地獄門】上的重要作品之一，曾名【詩人】。
+                   【沉思者】是所有「詩人」與「創造者」的化身，思考著如何以詩文創作來達到靈魂的解脫。
+                    不論是哪一種說法，羅丹省略五官細節但強調光影和肌理刻劃的手法，
+                    精彩地營造出沉思者內心複雜深沉的思緒，
+                    緊繃的筋肉和強烈的戲劇張力吸引觀眾駐足。
+                  </p>
+                </div>
+            </div>
+            <div class="wrabg-text2">
+              <div class="wrabg-bg"></div>
+              <div class="wrabg-pic2">
+                  <img srcset="蒂姆.jpg ">
+                  <h2>【蒂姆。沃克 : 美妙事物】</h2>
+                  <p>攝影界翹楚—蒂姆．沃克的職涯最大個展，世界巡迴亞洲第一站就在奇美博物館。
+                    此次引進國際頂尖博物館V&A與蒂姆‧沃克合作重量級展覽，
+                    展出超過100幅經典作品，以及受V&A藏品啟發10組系列新作。
+                    將帶領您進入攝影世界的無限想像。
+                  </p>
+                </div>
+            </div>
+          
+      </div>
+
+
+
+      <div class="article">
+        <div class="title-txt">
+          <h4>景點導覽</h4>
+        </div>
+          
+        <div class="article1">
+          <div class="article-pic">
+            <img srcset="奇美平面圖2.jpg ">
+          </div>
+            <div class="article-guided">
+              <nav>
+                <a href="#" class="map1">奇美博物館</a>
+                <a href="#" class="map2">阿波羅噴泉</a>
+                <a href="#" class="map3">繆斯廣場</a>
+                <a href="#" class="map4">奧林帕斯橋</a>
+                <a href="#" class="map5">邱比特橋</a>
+                <a href="#" class="map6">納希瑟斯觀景台</a>
+                <a href="#" class="map7">酒神劇場</a>
+                <a href="#" class="map8">繆思湖</a>
+                <a href="#" class="map9">觀景馬頭</a>
+                <a href="#" class="map10">奧林匹亞草坪</a>
+              </nav>
+            </div>
+        </div>
+      </div>
+
+
+
+    <div class="container-2">
+      <div class="container-1">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img srcset="奇美大廳.jpg">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>參觀指南</h5>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img srcset="奇美雕像.jpg">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>活動資訊</h5>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <img srcset="奇美畫廊.jpg">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>展覽資訊</h5>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="isaac-block" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">會員登入</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">帳號 :</label>
+                <input type="text" class="form-control" id="recipient-name">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">密碼 :</label>
+                <textarea class="form-control" id="message-text"></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary">會員登入</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="flooter">
+      <div class="footer">
+        <div class="footer-item">
+          <h4>關於我們</h4>
+          <nav>
+            <a href="#">line</a>
+            <a href="#">line</a>
+            <a href="#">line</a>
+          </nav>
+        </div>
+        <div class="footer-item">
+          <h4>最新消息</h4>
+          <nav>
+            <a href="#">line</a>
+            <a href="#">line</a>
+            <a href="#">line</a>
+          </nav>
+        </div>
+        <div class="footer-item">
+          <h4>活動資訊</h4>
+          <nav>
+            <a href="#">line</a>
+            <a href="#">line</a>
+            <a href="#">line</a>
+          </nav>
+        </div>
+        <div class="footer-item">
+          <h4>推薦行程</h4>
+          <nav>
+            <a href="#">line</a>
+            <a href="#">line</a>
+            <a href="#">line</a>
+          </nav>
+        </div>
+        <div class="footer-item footer-subs">
+          <h4>訂閱電子報</h4>
+          <form>
+            <input type="text" name="">
+            <input type="submit" value="訂閱">
+          </form>
+        </div>
+      </div>
+      <div class="copyright">
+        <h2>&copy; Copyright by Isaac</h2>
+      </div>
+      <div class="footer-pic1">
+        <img srcset="奇美雕像1.jpg ">
+      </div>
+      <div class="footer-pic2">
+        <img srcset="奇美雕像2.jpg ">
+      </div>
+    </div>
+
+
+    <button class="js-back-to-top back-to-top"></button>
+
+    
+    <script src="js/jquery.min.js"></script>
+    <script src="js/比賽.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  </body>
+</html> 
