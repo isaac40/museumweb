@@ -3,7 +3,6 @@
   <head>
 
 
-
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,6 +13,7 @@
     <link rel="stylesheet" href="css/all.css">
     <link rel="stylesheet" href="/比賽檔案/fontawesome/css/all.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="js/aos.css"/>
     <style>
         *{
             padding: 0;
@@ -126,7 +126,6 @@
           width:50%;
           height:500px; /*視窗高度*/
           background-color:#ccc;
-          border: solid #000 1px;
           box-shadow: 10px 5px 5px hsla(240, 40%, 15%, .6);
           position: absolute;
           top: 600px;
@@ -797,8 +796,28 @@
         .back-to-top:focus {
           outline: none;
         }
-        
+        #preloader {
+        /*   這是整個會蓋住畫面的底色色塊  */
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        left: 0%;
+        top: 0%;
+        background:linear-gradient(rgb(25, 0, 255), rgb(195, 191, 255));
+        z-index: 9999;
+        }
+        #status {
+        /*   這是中間loading的gif坐標css,我們盡量讓他畫面置中  */
+        position: fixed;
+        width: 218px;
+        height: 419px;
+        margin-left: -140px;
+        margin-top: -160px;
+        left: 50%;
+        top: 50%;
+        }
 
+        
         @media screen and (min-width:768px) {
             .menu_btn{
                 display: none;
@@ -984,9 +1003,12 @@
         </div>
       </div>
       
+      <div id="preloader">
+        <div id="status"><img src="loading.gif"/></div>
+      </div>
 
-      <div class="new">
-        <div class="new-text">
+      <div class="new" data-aos="flip-up" data-aos-duration="1000" data-aos-anchor-placement="center-bottom">
+        <div class="new-text" >
           <h4>奇美消息</h4>
           <p>2021.07.12  微解封</p>
           <p>2021.07.10  奇美博物館7/13開館 本周日開放網路預約</p>
@@ -1004,7 +1026,7 @@
       <div class="wrapbgcolor">
         <img srcset="奇美背景1.jpg">
           <div class="wrap">
-            <div class="item-group">
+            <div class="item-group"data-aos-delay="500" data-aos="zoom-in-up" data-aos-duration="1000" data-aos-anchor-placement="center-bottom">
                 <div class="item">
                   <div class="pic">
                     <img srcset="奇美開館.jpg ">
@@ -1015,7 +1037,7 @@
                   </div>
                 </div>
               
-                <div class="item">
+                <div class="item" >
                   <div class="pic">
                     <img srcset="奇美防疫.jpg ">
                   </div>
@@ -1042,21 +1064,25 @@
 
           <div class="wrabg-text"></div>
             <div class="wrabg-text1">
-              <div class="wrabg-bg1"></div>
+              <div class="wrabg-bg1">
+
+              </div>
               <div class="wrabg-pic1">
-                  <img srcset="沉思者.jpg ">
-                  <h2>【沉思者】</h2>
-                  <p>是位於羅丹【地獄門】上的重要作品之一，曾名【詩人】。
-                   【沉思者】是所有「詩人」與「創造者」的化身，思考著如何以詩文創作來達到靈魂的解脫。
-                    不論是哪一種說法，羅丹省略五官細節但強調光影和肌理刻劃的手法，
-                    精彩地營造出沉思者內心複雜深沉的思緒，
-                    緊繃的筋肉和強烈的戲劇張力吸引觀眾駐足。
-                  </p>
-                </div>
-            </div>
+                <img srcset="沉思者.jpg ">
+                <h2>【沉思者】</h2>
+                <p>是位於羅丹【地獄門】上的重要作品之一，曾名【詩人】。
+                 【沉思者】是所有「詩人」與「創造者」的化身，思考著如何以詩文創作來達到靈魂的解脫。
+                  不論是哪一種說法，羅丹省略五官細節但強調光影和肌理刻劃的手法，
+                  精彩地營造出沉思者內心複雜深沉的思緒，
+                  緊繃的筋肉和強烈的戲劇張力吸引觀眾駐足。
+                </p>
+              </div>
+              </div>
             <div class="wrabg-text2">
-              <div class="wrabg-bg"></div>
-              <div class="wrabg-pic2">
+              <div class="wrabg-bg">
+
+              </div>
+                <div class="wrabg-pic2">
                   <img srcset="蒂姆.jpg ">
                   <h2>【蒂姆。沃克 : 美妙事物】</h2>
                   <p>攝影界翹楚—蒂姆．沃克的職涯最大個展，世界巡迴亞洲第一站就在奇美博物館。
@@ -1224,8 +1250,19 @@
     <button class="js-back-to-top back-to-top"></button>
 
     
-    <script src="js/jquery.min.js"></script>
+    <!-- jQuery Plugin -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
     <script src="js/比賽.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/loading.js"></script>    
+    
+    <script>
+      AOS.init({
+        easing: 'ease-in-out-sine'
+      });
+    </script>
+
+
   </body>
 </html> 
